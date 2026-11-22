@@ -17,4 +17,5 @@
         <maven.compiler.release>26</maven.compiler.release>
         <exec.mainClass>com.mycompany.attentify.Attentify</exec.mainClass>
     </properties>
+    <name>Attentify</name>
 </project>
