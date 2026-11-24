@@ -8,7 +8,6 @@ import java.util.*;
 
 public class AttendanceService {
     private final AttendanceDAO dao;
-    // Module 6: Collections Framework (List, Map, Set)
     private final List<AttendanceRecord> cachedRecords = new ArrayList<>();
     private final Map<String, AttendanceRecord> recordLookupMap = new HashMap<>();
     private final Set<String> registeredIds = new HashSet<>();
@@ -17,7 +16,6 @@ public class AttendanceService {
         this.dao = new AttendanceDAO();
     }
 
-    // Module 7: Synchronized access to shared collection state
     public synchronized List<AttendanceRecord> loadAndSyncRecords() throws SQLException {
         List<AttendanceRecord> freshData = dao.findAll();
         cachedRecords.clear();
@@ -71,19 +69,16 @@ public class AttendanceService {
         loadAndSyncRecords();
     }
 
-    // Module 6: HashMap fast key-based lookup
     public synchronized AttendanceRecord findByStudentId(String id) {
         return recordLookupMap.get(id.trim());
     }
 
-    // Module 6: Comparator sorting
     public synchronized List<AttendanceRecord> getRecordsSortedByName() {
         List<AttendanceRecord> sorted = new ArrayList<>(cachedRecords);
         sorted.sort(Comparator.comparing(r -> r.getStudent().getFullName().toLowerCase()));
         return sorted;
     }
 
-    // Module 5 & 6: Iterator traversal & Record return
     public synchronized AttendanceSummary computeSummary() {
         int total = 0, present = 0, late = 0, absent = 0;
         Iterator<AttendanceRecord> it = cachedRecords.iterator();
