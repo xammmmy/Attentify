@@ -18,7 +18,6 @@ public class AttendanceApp extends JFrame {
     private final AttendanceService service;
     private SyncWorker syncWorker;
 
-    // Swing Input Controls
     private JTextField txtStudentId;
     private JTextField txtFullName;
     private JTextField txtProgram;
@@ -26,7 +25,6 @@ public class AttendanceApp extends JFrame {
     private JTextField txtRemarks;
     private JTextField txtSearchId;
 
-    // Swing Display Controls
     private JTable attendanceTable;
     private DefaultTableModel tableModel;
     private JLabel lblSummary;
@@ -46,7 +44,6 @@ public class AttendanceApp extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
 
-        // --- TOP PANEL: Form Inputs ---
         JPanel formPanel = new JPanel(new GridLayout(3, 4, 10, 10));
         formPanel.setBorder(BorderFactory.createTitledBorder("Student Attendance Details"));
 
@@ -72,7 +69,6 @@ public class AttendanceApp extends JFrame {
         formPanel.add(new JLabel("Quick Search ID:"));
         formPanel.add(txtSearchId);
 
-        // --- BUTTON BAR ---
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
         JButton btnAdd = new JButton("Add Record");
         JButton btnUpdate = new JButton("Update Record");
@@ -94,7 +90,6 @@ public class AttendanceApp extends JFrame {
         northContainer.add(buttonPanel, BorderLayout.SOUTH);
         add(northContainer, BorderLayout.NORTH);
 
-        // --- CENTER PANEL: JTable ---
         String[] columns = {"Student ID", "Full Name", "Program", "Status", "Remarks", "Report Preview"};
         tableModel = new DefaultTableModel(columns, 0) {
             @Override
@@ -108,7 +103,6 @@ public class AttendanceApp extends JFrame {
         scrollPane.setBorder(new EmptyBorder(0, 10, 0, 10));
         add(scrollPane, BorderLayout.CENTER);
 
-        // --- SOUTH PANEL: Summary & Thread Status ---
         JPanel southPanel = new JPanel(new BorderLayout());
         southPanel.setBorder(new EmptyBorder(5, 12, 10, 12));
         lblSummary = new JLabel("Total: 0 | Present: 0 | Late: 0 | Absent: 0 | Rate: 0.0%");
@@ -120,7 +114,6 @@ public class AttendanceApp extends JFrame {
         southPanel.add(lblSyncStatus, BorderLayout.EAST);
         add(southPanel, BorderLayout.SOUTH);
 
-        // --- EVENT LISTENERS (Module 7 & 8) ---
         btnAdd.addActionListener(e -> handleAdd());
         btnUpdate.addActionListener(e -> handleUpdate());
         btnDelete.addActionListener(e -> handleDelete());
@@ -128,7 +121,6 @@ public class AttendanceApp extends JFrame {
         btnSort.addActionListener(e -> refreshTableData(true));
         btnClear.addActionListener(e -> clearForm());
 
-        // Populate fields when clicking a row in JTable
         attendanceTable.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting() && attendanceTable.getSelectedRow() != -1) {
                 int row = attendanceTable.getSelectedRow();
@@ -141,7 +133,6 @@ public class AttendanceApp extends JFrame {
             }
         });
 
-        // Cleanly stop background thread on window close
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
