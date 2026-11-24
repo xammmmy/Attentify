@@ -97,15 +97,32 @@ public class AttendanceService {
         return new AttendanceSummary(total, present, late, absent);
     }
 
-    private void validateInput(String id, String name, String program) throws InvalidAttendanceException {
-        if (id == null || id.isBlank()) {
-            throw new InvalidAttendanceException("Student ID is required.");
-        }
-        if (name == null || name.isBlank()) {
-            throw new InvalidAttendanceException("Student Full Name is required.");
-        }
-        if (program == null || program.isBlank()) {
-            throw new InvalidAttendanceException("Course/Program is required.");
-        }
+     private void validateInput(String id, String name, String program)
+        throws InvalidAttendanceException {
+
+    if ((id == null || id.isBlank())
+            && (name == null || name.isBlank())) {
+        throw new InvalidAttendanceException(
+                "Student ID and Student Name are required."
+        );
     }
+
+    if (id == null || id.isBlank()) {
+        throw new InvalidAttendanceException(
+                "Student ID is required."
+        );
+    }
+
+    if (name == null || name.isBlank()) {
+        throw new InvalidAttendanceException(
+                "Student Name is required."
+        );
+    }
+
+    if (program == null || program.isBlank()) {
+        throw new InvalidAttendanceException(
+                "Course/Program is required."
+        );
+    }
+   }
 }
